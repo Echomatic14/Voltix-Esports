@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090710">
+  <meta name="description" content="VLTX Esports — Fortnite and Rocket League. Built to compete.">
+  <title>VLTX Esports — Built to Compete</title>
+  <style>
+    :root {
+      --bg: #090710;
+      --bg-soft: #0f0b18;
+      --panel: #151020;
+      --panel-light: #1c152a;
+      --purple: #9852ff;
+      --purple-light: #c39aff;
+      --white: #faf8ff;
+      --muted: #aaa2ba;
+      --line: rgba(195,154,255,.19);
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    .topline { height: 3px; background: linear-gradient(90deg, transparent, #7540c8, #d6baff, #7540c8, transparent); }
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9,7,16,.86); backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 26px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 950; letter-spacing: .17em; }
+    .brand img { width: 43px; height: 43px; object-fit: cover; border-radius: 8px; }
+    .brand-word { line-height: 1.1; font-size: 1rem; }
+    .brand-word small { display: block; margin-top: 5px; color: var(--purple-light); font-size: .57rem; letter-spacing: .31em; }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: #d6d0e2; font-size: .85rem; }
+    .nav-links > a:not(.btn):hover { color: var(--purple-light); }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
+      padding: 12px 18px; border-radius: 7px; border: 1px solid transparent;
+      background: var(--purple); color: #fff; font-size: .86rem; font-weight: 850;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); background: #ac70ff; }
+    .btn.ghost { background: rgba(255,255,255,.035); border-color: rgba(255,255,255,.2); }
+    .btn.ghost:hover { background: rgba(152,82,255,.12); border-color: var(--purple-light); }
+    .menu-toggle { display: none; color: white; background: transparent; border: 1px solid var(--line); padding: 8px 12px; border-radius: 7px; }
+    .hero {
+      min-height: 690px; position: relative; display: flex; align-items: center; overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(9,7,16,.98) 0%, rgba(9,7,16,.88) 44%, rgba(9,7,16,.48) 100%),
+        url("logo.png") center 46% / cover no-repeat;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse at 78% 48%, rgba(142,68,255,.27), transparent 38%),
+                  linear-gradient(115deg, transparent 0 66%, rgba(169,111,255,.08) 66.1% 66.3%, transparent 66.5%);
+    }
+    .hero::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 95px 0 84px; max-width: 760px; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--purple-light); font-size: .72rem; letter-spacing: .21em; font-weight: 900; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 27px; height: 2px; background: var(--purple-light); }
+    h1 { margin: 25px 0 23px; font-size: clamp(3.8rem, 10.2vw, 8rem); line-height: .85; letter-spacing: -.085em; font-weight: 1000; }
+    h1 span { display: block; color: var(--purple-light); }
+    .hero-copy { max-width: 590px; color: #c5bdd3; font-size: clamp(1rem, 1.6vw, 1.13rem); margin: 0 0 30px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-foot { display: flex; align-items: center; gap: 13px; margin-top: 39px; color: #948ba5; font-size: .7rem; letter-spacing: .17em; text-transform: uppercase; }
+    .hero-foot .dash { width: 32px; height: 1px; background: var(--purple-light); }
+    .hero-foot strong { color: #eee5ff; }
+    .scroll-mark { position: absolute; right: 0; bottom: 35px; writing-mode: vertical-rl; color: #8f829f; font-size: .64rem; letter-spacing: .22em; text-transform: uppercase; }
+    .section { padding: 100px 0; }
+    .section-dark { background: linear-gradient(180deg, #0e0a17, #0a0811); border-block: 1px solid rgba(255,255,255,.055); }
+    .section-top { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 36px; }
+    .kicker { color: var(--purple-light); font-size: .7rem; letter-spacing: .22em; font-weight: 900; text-transform: uppercase; }
+    h2 { margin: 9px 0 0; font-size: clamp(2.1rem, 5.1vw, 3.8rem); line-height: .98; letter-spacing: -.065em; }
+    .section-top > p { max-width: 435px; margin: 0; color: var(--muted); font-size: .95rem; }
+    .cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .card {
+      min-height: 245px; padding: 27px; position: relative; overflow: hidden;
+      background: linear-gradient(145deg, rgba(29,21,44,.96), rgba(16,12,24,.98));
+      border: 1px solid var(--line); border-radius: 12px;
+      transition: transform .22s ease, border-color .22s ease;
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(195,154,255,.58); }
+    .card::after { content: ""; position: absolute; width: 115px; height: 115px; top: -56px; right: -55px; transform: rotate(45deg); border: 1px solid rgba(195,154,255,.18); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .card-index { color: var(--purple-light); font-size: .72rem; font-weight: 900; letter-spacing: .16em; }
+    .card-symbol { color: #8c5bd1; font-size: 1.15rem; }
+    .card h3 { font-size: 1.35rem; letter-spacing: -.025em; margin: 32px 0 9px; }
+    .card p { color: var(--muted); font-size: .91rem; margin: 0; }
+    .tag { display: inline-flex; margin-top: 22px; border: 1px solid rgba(195,154,255,.25); padding: 5px 9px; border-radius: 4px; color: #ddcaff; font-size: .66rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 58px; align-items: center; }
+    .logo-frame {
+      min-height: 430px; position: relative; overflow: hidden; display: grid; place-items: center;
+      background: #0d0915; border: 1px solid var(--line); border-radius: 14px;
+    }
+    .logo-frame::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(195,154,255,.12); border-radius: 8px; pointer-events: none; }
+    .logo-frame img { width: 100%; height: 100%; min-height: 430px; object-fit: contain; }
+    .feature-copy h2 { max-width: 550px; }
+    .feature-copy > p { color: var(--muted); margin: 22px 0; }
+    .feature-list { list-style: none; padding: 0; margin: 26px 0 30px; display: grid; gap: 13px; }
+    .feature-list li { display: flex; gap: 12px; color: #e5deef; font-size: .92rem; }
+    .feature-list li::before { content: "↗"; color: var(--purple-light); font-weight: 900; }
+    .community-box {
+      position: relative; overflow: hidden; text-align: center; padding: 76px 26px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(152,82,255,.23), transparent 65%), #120d1c;
+      border: 1px solid var(--line); border-radius: 15px;
+    }
+    .community-box::before, .community-box::after { content: ""; position: absolute; width: 170px; height: 170px; border: 1px solid rgba(195,154,255,.12); transform: rotate(45deg); pointer-events: none; }
+    .community-box::before { top: -120px; left: -65px; }
+    .community-box::after { bottom: -120px; right: -65px; }
+    .community-box h2 { max-width: 760px; margin: 12px auto 0; }
+    .community-box p { max-width: 590px; margin: 20px auto 28px; color: var(--muted); }
+    footer { padding: 27px 0; border-top: 1px solid rgba(255,255,255,.07); color: #938ba0; font-size: .78rem; }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .footer-row .brand img { width: 35px; height: 35px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links a:hover { color: var(--purple-light); }
+    .trademark { color: #c5b3df; }
+    @media (max-width: 780px) {
+      .wrap { width: min(var(--max), calc(100% - 30px)); }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: inline-block; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 17px 22px 23px;
+        background: rgba(9,7,16,.98); border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links > a { padding: 12px 0; }
+      .nav-links .btn { margin-top: 8px; }
+      .hero { min-height: 590px; background-position: 58% center; }
+      .hero-content { padding: 76px 0; }
+      .scroll-mark { display: none; }
+      .section { padding: 72px 0; }
+      .section-top { display: block; }
+      .section-top > p { margin-top: 17px; }
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: 205px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 30px; }
+      .logo-frame, .logo-frame img { min-height: 290px; }
+      .footer-row { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="VLTX Esports home">
+        <img src="logo.png" alt="VLTX Esports logo">
+        <span class="brand-word">VLTX<small>ESPORTS</small></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#games">Games</a>
+        <a href="#community">Community</a>
+        <a class="btn" href="https://discord.gg/297tvMtmtS" target="_blank" rel="noopener noreferrer">Join Discord ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-content">
+        <div class="eyebrow">Competitive gaming organization</div>
+        <h1>BUILT TO<br><span>COMPETE.</span></h1>
+        <p class="hero-copy">Welcome to VLTX Esports — a rising competitive organization focused on Fortnite, Rocket League, and creating opportunities for players to improve, compete, and represent the team.</p>
+        <div class="hero-actions">
+          <a class="btn" href="https://discord.gg/297tvMtmtS" target="_blank" rel="noopener noreferrer">Join the community ↗</a>
+          <a class="btn ghost" href="#games">Explore VLTX ↓</a>
+        </div>
+        <div class="hero-foot"><span class="dash"></span><strong>Focus.</strong> Teamwork. Progress. Performance.</div>
+      </div>
+      <div class="scroll-mark">Scroll to explore ↓</div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="wrap">
+        <div class="section-top">
+          <div><div class="kicker">01 / The organization</div><h2>MORE THAN<br>A NAME.</h2></div>
+          <p>VLTX is about building a competitive community where players can develop their skills, find teammates, and work toward bigger goals together.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="card-top"><span class="card-index">01 — COMPETE</span><span class="card-symbol">↗</span></div>
+            <h3>Competitive mindset</h3>
+            <p>Bring commitment, communicate with your team, and learn from every game.</p>
+            <span class="tag">Raise the standard</span>
+          </article>
+          <article class="card">
+            <div class="card-top"><span class="card-index">02 — DEVELOP</span><span class="card-symbol">✳</span></div>
+            <h3>Player development</h3>
+            <p>Keep improving your mechanics, decision-making, consistency, and teamwork.</p>
+            <span class="tag">Keep progressing</span>
+          </article>
+          <article class="card">
+            <div class="card-top"><span class="card-index">03 — CONNECT</span><span class="card-symbol">⌁</span></div>
+            <h3>One community</h3>
+            <p>Meet players, find teammates, and stay up to date with the VLTX journey.</p>
+            <span class="tag">Built together</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="games">
+      <div class="wrap">
+        <div class="section-top">
+          <div><div class="kicker">02 / Our games</div><h2>TWO SCENES.<br>ONE ORGANIZATION.</h2></div>
+          <p>From fast-paced build fights to high-speed rotations, VLTX brings its competitive mindset across different games.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="card-top"><span class="card-index">GAME 01</span><span class="card-symbol">⌁</span></div>
+            <h3>Fortnite</h3>
+            <p>Game sense, mechanics, smart decisions, and teamwork when it matters most.</p>
+            <span class="tag">Battle Royale</span>
+          </article>
+          <article class="card">
+            <div class="card-top"><span class="card-index">GAME 02</span><span class="card-symbol">↗</span></div>
+            <h3>Rocket League</h3>
+            <p>Clean rotations, quick reactions, team chemistry, and consistent play.</p>
+            <span class="tag">Competitive</span>
+          </article>
+          <article class="card">
+            <div class="card-top"><span class="card-index">UP NEXT</span><span class="card-symbol">✳</span></div>
+            <h3>Future opportunities</h3>
+            <p>Follow the community for team news, announcements, and potential tryouts.</p>
+            <a class="tag" href="https://discord.gg/297tvMtmtS" target="_blank" rel="noopener noreferrer">View announcements ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap feature-grid">
+        <div class="logo-frame"><img src="logo.png" alt="Original VLTX Esports logo"></div>
+        <div class="feature-copy">
+          <div class="kicker">03 / Join the community</div>
+          <h2>YOUR NEXT CHAPTER STARTS HERE.</h2>
+          <p>Whether you want to compete, connect with other players, or follow the organization, the VLTX Discord is the place to start.</p>
+          <ul class="feature-list">
+            <li>Get organization announcements and updates</li>
+            <li>Connect with Fortnite and Rocket League players</li>
+            <li>Watch for roster news and tryout opportunities</li>
+          </ul>
+          <a class="btn" href="https://discord.gg/297tvMtmtS" target="_blank" rel="noopener noreferrer">Enter VLTX Discord ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="community">
+      <div class="wrap">
+        <div class="community-box">
+          <div class="kicker">Your move</div>
+          <h2>READY TO REPRESENT VLTX?</h2>
+          <p>Join the community, meet fellow players, and follow the next chapter of VLTX Esports.</p>
+          <a class="btn" href="https://discord.gg/297tvMtmtS" target="_blank" rel="noopener noreferrer">JOIN THE COMMUNITY ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <a class="brand" href="#home"><img src="logo.png" alt=""><span class="brand-word">VLTX<small>ESPORTS</small></span></a>
+      <span>© <span id="year"></span> VLTX Esports. All rights reserved. <strong class="trademark">VLTX Esports™</strong></span>
+      <div class="footer-links"><a href="#about">About</a><a href="#games">Games</a><a href="https://discord.gg/297tvMtmtS" target="_blank" rel="noopener noreferrer">Discord ↗</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.textContent = "☰";
+    }));
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
